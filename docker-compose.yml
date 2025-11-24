@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: shopify_api
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - API_KEY=MaSuperCleSecrete123
+      - API_SECRET=MonSecretHMAC
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MONGO_URI=mongodb://mongo:27017/shopify_scraping
+      - CACHE_TTL=3600
+    depends_on:
+      - redis
+      - mongo
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
+  redis:
+    image: redis:7-alpine
+    container_name: shopify_redis
+    ports:
+      - "6379:6379"
+
+  mongo:
+    image: mongo:7
+    container_name: shopify_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
