@@ -8,8 +8,7 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
-      - API_KEY=MaSuperCleSecrete123
-      - API_SECRET=MonSecretHMAC
+      - API_KEY=${API_KEY}
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - MONGO_URI=mongodb://mongo:27017/shopify_scraping
@@ -17,9 +16,6 @@ services:
     depends_on:
       - redis
       - mongo
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
 
   redis:
     image: redis:7-alpine

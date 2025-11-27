@@ -6,142 +6,182 @@ import fs from 'fs';
 import path from 'path';
 import mongoose from 'mongoose';
 import crypto from 'crypto';
-import rateLimit from 'express-rate-limit';
 import { PlaywrightCrawler, Dataset } from 'crawlee';
+import { chromium } from 'playwright';
+import rateLimit from 'express-rate-limit';
 import cron from 'node-cron';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const JSON_FILE = path.join(__dirname, "products.json");
 
+// --- Express ---
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ⚡ Rate limiter
-const limiter = rateLimit({
+// --- Rate limiter ---
+app.use(rateLimit({
   windowMs: 60 * 1000,
-  max: 10,
-  message: { success: false, error: 'Trop de requêtes' },
-});
-app.use(limiter);
+  max: 50,
+  message: { success: false, error: "Too many requests" }
+}));
 
-// Redis
+// --- Redis ---
 const redis = new Redis({
-  host: process.env.REDIS_HOST,
-  port: parseInt(process.env.REDIS_PORT || '6379'),
+  host: process.env.REDIS_HOST || "127.0.0.1",
+  port: Number(process.env.REDIS_PORT) || 6379
 });
-redis.on('connect', () => console.log('✅ Redis connecté'));
-redis.on('error', (err) => console.error('❌ Erreur Redis:', err));
+redis.on("connect", () => console.log("Redis OK"));
+redis.on("error", err => console.error("Redis ERROR:", err));
 
-// MongoDB
-mongoose
-  .connect(process.env.MONGO_URI || '')
-  .then(() => console.log('✅ MongoDB connecté'))
-  .catch((err) => console.error('❌ Erreur MongoDB:', err));
+// --- MongoDB ---
+mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/shopifydb")
+  .then(() => console.log("MongoDB OK"))
+  .catch(err => console.error("MongoDB ERROR:", err));
 
-// Schema Mongo
+// --- Mongoose Schema ---
 const productSchema = new mongoose.Schema({
+  productId: { type: String, unique: true },
   title: String,
   price: String,
   image: String,
-  link: { type: String, unique: true },
+  link: { type: String, unique: true }
 });
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model("Product", productSchema);
 
-// Middleware API Key + HMAC
-function verifyAPIKey(req, res, next) {
-  if (process.env.NODE_ENV === 'development') return next();
-
-  const clientKey = req.header('x-api-key')?.trim();
-  const signature = req.header('x-signature')?.trim();
-  const timestamp = req.header('x-timestamp')?.trim();
-
-  if (!clientKey || !signature || !timestamp)
-    return res.status(400).json({ success: false, error: 'Headers manquants' });
-
-  if (clientKey !== process.env.API_KEY)
-    return res.status(401).json({ success: false, error: 'API Key invalide' });
-
-  const nowSec = Math.floor(Date.now() / 1000);
-  const reqTs = parseInt(timestamp, 10);
-  if (isNaN(reqTs)) return res.status(400).json({ success: false, error: 'Timestamp invalide' });
-
-  if (Math.abs(nowSec - reqTs) > 600)
-    return res.status(403).json({ success: false, error: 'Requête expirée' });
-
-  const expectedSignature = crypto.createHmac('sha256', process.env.API_SECRET)
-                                  .update(`${clientKey}|${timestamp}`)
-                                  .digest('hex');
-
-  if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSignature)))
-    return res.status(403).json({ success: false, error: 'Signature invalide' });
-
-  next();
+// --- JSON loader ---
+function loadProductsFromJSON() {
+  if (fs.existsSync(JSON_FILE)) {
+    try { return JSON.parse(fs.readFileSync(JSON_FILE, "utf-8")); }
+    catch { return []; }
+  }
+  return [];
 }
 
-// Scraping Shopify
-async function scrapeShopify() {
-  const crawler = new PlaywrightCrawler({
-    maxRequestsPerCrawl: 50,
-    maxConcurrency: 5,
-    headless: true,
-    async requestHandler({ page, pushData }) {
-      await page.waitForSelector('.product-item__title', { timeout: 15000 });
-      const products = await page.$$eval('.product-item', (items) =>
-        items.map((item) => {
-          const title = item.querySelector('.product-item__title')?.textContent?.trim() || null;
-          const price = item.querySelector('span.price')?.textContent?.trim() || null;
-          const img = item.querySelector('img');
-          const image = img?.getAttribute('src') || img?.getAttribute('data-src') || null;
-          const link = item.querySelector('a')?.href || null;
-          return { title, price, image, link };
-        })
-      );
-      await pushData(products.filter(p => p.link));
-    },
-  });
+// --- Middleware RapidAPI Key ---
+app.use((req, res, next) => {
+  const key = req.headers['x-rapidapi-key'];
+  if (!key || key !== process.env.API_KEY) {
+    return res.status(401).json({ success: false, error: 'Invalid API key' });
+  }
+  next();
+});
 
-  const pages = Array.from({ length: 7 }, (_, i) =>
+// --- Scraper Shopify ---
+async function scrapeShopify() {
+  console.log("\n🚀 Scraping Shopify...");
+
+  const oldProducts = loadProductsFromJSON();
+  const oldLinks = new Set(oldProducts.map(p => p.link));
+
+  const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
+  const page = await browser.newPage();
+  await page.goto("https://warehouse-theme-metal.myshopify.com/collections/home-cinema");
+
+  const totalPages = await page.$$eval('.pagination a', links =>
+    Math.max(...links.map(l => Number(l.textContent)).filter(Boolean), 1)
+  );
+  await browser.close();
+
+  const urls = Array.from({ length: totalPages }, (_, i) =>
     `https://warehouse-theme-metal.myshopify.com/collections/home-cinema?page=${i + 1}`
   );
 
-  await crawler.run(pages);
+  const crawler = new PlaywrightCrawler({
+    headless: true,
+    maxRequestsPerCrawl: 50,
+    async requestHandler({ page, pushData, request }) {
+      try {
+        await page.waitForSelector(".product-item", { timeout: 20000 }).catch(() => console.log("Pas de produit trouvé"));
+        const data = await page.$$eval(".product-item", items =>
+          items.map(item => {
+            const title = item.querySelector(".product-item__title")?.textContent?.trim();
+            const price = item.querySelector("span.price")?.textContent?.trim();
+            const link = item.querySelector("a")?.href;
+            const img = item.querySelector("img");
+            const image = img?.src || img?.getAttribute("data-src");
+            return { title, price, image, link };
+          })
+        );
 
-  const { items } = await Dataset.getData();
-  fs.writeFileSync(path.join(__dirname, 'shopify_products.json'), JSON.stringify(items, null, 2));
+        const newProducts = data
+          .filter(d => d.link && !oldLinks.has(d.link))
+          .map(p => ({ ...p, productId: crypto.randomBytes(8).toString("hex") }));
 
-  if (items.length) {
-    const ops = items.map((item) => ({
-      updateOne: { filter: { link: item.link }, update: { $set: item }, upsert: true },
-    }));
-    await Product.bulkWrite(ops);
-  }
+        if (newProducts.length > 0) {
+          console.log(`\n--- Nouveaux produits depuis ${request.url} ---`);
+          newProducts.forEach(p => console.log(`${p.title} | ${p.price} | ${p.link}`));
+          newProducts.forEach(p => oldLinks.add(p.link));
+          await pushData(newProducts);
+        }
+      } catch (err) {
+        console.error(`Error scraping ${request.url}:`, err.message);
+      }
+    }
+  });
 
-  await redis.set('shopify_products', JSON.stringify(items), 'EX', parseInt(process.env.CACHE_TTL || '3600'));
-  return items;
+  await crawler.run(urls);
+
+  const datasetData = await Dataset.getData({ clean: true });
+  const scrapedItems = datasetData.items || [];
+
+  const uniqueNewProducts = scrapedItems
+    .filter(p => p.link && !oldProducts.some(op => op.link === p.link))
+    .map(p => ({ ...p, productId: crypto.randomBytes(8).toString("hex") }));
+
+  const allProducts = [...oldProducts, ...uniqueNewProducts];
+
+  fs.writeFileSync(JSON_FILE, JSON.stringify(allProducts, null, 2));
+  console.log(`💾 JSON mis à jour : ${allProducts.length} produits`);
+
+  const ops = uniqueNewProducts.map(p => ({
+    updateOne: { filter: { link: p.link }, update: { $set: p }, upsert: true }
+  }));
+  if (ops.length > 0) await Product.bulkWrite(ops);
+  console.log("✅ MongoDB mis à jour");
+
+  await redis.set("shopify_products", JSON.stringify({ success: true, total: allProducts.length, products: allProducts }), "EX", Number(process.env.CACHE_TTL || 300));
+  console.log("✅ Redis mis à jour");
+  console.log("🏁 Scraping terminé !");
 }
 
-// API Route
-app.get('/api/products', verifyAPIKey, async (req, res) => {
+// --- Endpoints ---
+app.get("/api/products", async (req, res) => {
   try {
-    const cached = await redis.get('shopify_products');
-    if (cached) return res.json({ success: true, count: JSON.parse(cached).length, products: JSON.parse(cached) });
+    let allProducts = loadProductsFromJSON();
+    let { search = "", page = 1, limit = 10 } = req.query;
+    page = Number(page); limit = Number(limit);
+    const skip = (page - 1) * limit;
 
-    const filePath = path.join(__dirname, 'shopify_products.json');
-    const data = fs.existsSync(filePath) ? JSON.parse(fs.readFileSync(filePath, 'utf-8')) : await scrapeShopify();
-    await redis.set('shopify_products', JSON.stringify(data), 'EX', parseInt(process.env.CACHE_TTL || '3600'));
+    let filtered = allProducts;
+    if (search) filtered = filtered.filter(p => p.title?.toLowerCase().includes(search.toLowerCase()));
 
-    res.json({ success: true, count: data.length, products: data });
+    const paginated = filtered.slice(skip, skip + limit);
+    return res.json({ success: true, page, limit, total: filtered.length, products: paginated });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, error: 'Erreur scraping' });
+    return res.status(500).json({ success: false, error: "Server error" });
   }
 });
 
-// Cron toutes les heures
-cron.schedule('0 * * * *', scrapeShopify);
+app.get("/api/products/all", async (req, res) => {
+  try {
+    const allProducts = loadProductsFromJSON();
+    return res.json({ success: true, total: allProducts.length, products: allProducts });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, error: "Server error" });
+  }
+});
 
-// Start server
+// --- Cron scraping toutes les heures ---
+cron.schedule("0 * * * *", scrapeShopify);
+
+// --- Lancer serveur ---
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// --- Lancer scraping au démarrage ---
+(async () => { await scrapeShopify().catch(console.error); })();
