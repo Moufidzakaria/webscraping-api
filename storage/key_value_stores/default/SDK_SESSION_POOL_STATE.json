@@ -1,0 +1,242 @@
+{
+  "usableSessionsCount": 8,
+  "retiredSessionsCount": 0,
+  "sessions": [
+    {
+      "id": "session_9ex5GDp5nF",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-11-29T15:09:31.439Z",
+      "createdAt": "2025-11-29T14:19:31.439Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_JDMZzmWB4t",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": [
+          {
+            "key": "localization",
+            "value": "MA",
+            "expires": "2026-11-29T14:19:43.030Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "hostOnly": true,
+            "creation": "2025-11-29T14:19:34.881Z",
+            "lastAccessed": "2025-11-29T14:19:45.030Z"
+          },
+          {
+            "key": "cart_currency",
+            "value": "USD",
+            "expires": "2025-12-13T14:19:43.031Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "hostOnly": true,
+            "creation": "2025-11-29T14:19:34.882Z",
+            "lastAccessed": "2025-11-29T14:19:45.031Z"
+          },
+          {
+            "key": "_shopify_y",
+            "value": "4851e262-1e25-4b4b-9c82-154cd95d9ff7",
+            "expires": "2026-11-29T20:19:43.031Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-11-29T14:19:34.882Z",
+            "lastAccessed": "2025-11-29T14:19:45.031Z"
+          },
+          {
+            "key": "_shopify_s",
+            "value": "bed837a5-90c3-4a8b-a24d-4f7711698fc6",
+            "expires": "2025-11-29T14:49:43.031Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-11-29T14:19:34.883Z",
+            "lastAccessed": "2025-11-29T14:19:45.031Z"
+          },
+          {
+            "key": "_shopify_essential",
+            "value": ":AZrP-7llAAEAnlaC-12xr-lS2Rv4997lfyvzGfwlxkaT0Bnoc1LtHzP5_gjNO26p4_jcPjryrT86FpsaMtOZHYS8lI-5zorpYNNlqcQAYnLMu2PT53kbHSK8YFcesTKW-8JxxASVyWwbc-LZzx3x_JCElH7MX5eG9CBQjOX3pVKvIHA4PZMZCiBhGwopNW5K3IaG9VemGa9ZSsSf7Niu4rIr21hfG5tmB0vi1vucX7Tb6yG3mt_UUw6Oz2PKaXVxrb6fNJCMK1DWuyfvSOXitqR_PnSkBMO97gghjVDF43dFKpmBpV1F-vCCOdPAz7lF_ay5ODrEAWSAHBR_yphcGZxGd9tSXv56OxMspw:",
+            "expires": "2026-11-29T14:19:43.571Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "secure": true,
+            "httpOnly": true,
+            "hostOnly": true,
+            "creation": "2025-11-29T14:19:34.883Z",
+            "lastAccessed": "2025-11-29T14:19:45.031Z"
+          },
+          {
+            "key": "_shopify_analytics",
+            "value": ":AZrP-7p9AAEAs31IaMYBhA2Yv3cPcOgTByzaj6Gerv-wrDhBUxJK2YZ52c3JDlAm54hFummDI2dkSofE6NTypxB9dAqEOc__xeNAkGnQSD_jpQ:",
+            "expires": "2026-11-29T14:19:32.385Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "secure": true,
+            "httpOnly": true,
+            "hostOnly": true,
+            "creation": "2025-11-29T14:19:34.883Z",
+            "lastAccessed": "2025-11-29T14:19:45.031Z"
+          },
+          {
+            "key": "keep_alive",
+            "value": "eyJ2IjoyLCJ0cyI6MTc2NDQyNTk4Mzk5OSwiZW52Ijp7IndkIjowLCJ1YSI6MSwiY3YiOjEsImJyIjoxfSwiYmh2Ijp7Im1hIjowLCJjYSI6MCwia2EiOjAsInNhIjowLCJrYmEiOjAsInRhIjowLCJ0IjowLCJubSI6MCwibXMiOjAsIm1qIjowLCJtc3AiOjAsInZjIjowLCJjcCI6MCwicmMiOjAsImtqIjowLCJraSI6MCwic3MiOjAsInNqIjowLCJzc20iOjAsInNwIjowLCJ0cyI6MCwidGoiOjAsInRwIjowLCJ0c20iOjB9LCJzZXMiOnsicCI6MiwicyI6MTc2NDQyNTk3NDU1NCwiZCI6OH19",
+            "expires": "2025-11-29T15:09:45.030Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": true,
+            "creation": "2025-11-29T14:19:38.700Z",
+            "lastAccessed": "2025-11-29T14:19:45.031Z"
+          }
+        ]
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-11-29T15:09:31.445Z",
+      "createdAt": "2025-11-29T14:19:31.445Z",
+      "usageCount": 7,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_4cG4ddufml",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-11-29T15:09:31.457Z",
+      "createdAt": "2025-11-29T14:19:31.457Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_ZRSwi0dWwS",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-11-29T15:09:35.209Z",
+      "createdAt": "2025-11-29T14:19:35.209Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_mEahQtaWKd",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-11-29T15:09:35.233Z",
+      "createdAt": "2025-11-29T14:19:35.233Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_RhvCaHd3gD",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-11-29T15:09:39.238Z",
+      "createdAt": "2025-11-29T14:19:39.238Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_SZf41jfQzq",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-11-29T15:09:39.377Z",
+      "createdAt": "2025-11-29T14:19:39.377Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_tK3wKyPCMt",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-11-29T15:09:41.777Z",
+      "createdAt": "2025-11-29T14:19:41.777Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    }
+  ]
+}

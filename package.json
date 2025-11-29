@@ -26,6 +26,7 @@
     },
     "scripts": {
         "start": "npm run start:dev",
+        "start:ts": "ts-node test-api.ts",
         "start:prod": "node dist/main.js",
         "start:dev": "tsx src/main.ts",
         "build": "tsc",

@@ -14,34 +14,34 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const JSON_FILE = path.join(__dirname, "products.json");
+const JSON_FILE = path.join(__dirname, "../products.json");
 
-// --- Express ---
+// ---------------- EXPRESS ----------------
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// --- Rate limiter ---
+// ---------------- RATE LIMIT -------------
 app.use(rateLimit({
   windowMs: 60 * 1000,
   max: 50,
   message: { success: false, error: "Too many requests" }
 }));
 
-// --- Redis ---
+// ---------------- REDIS ------------------
 const redis = new Redis({
-  host: process.env.REDIS_HOST || "127.0.0.1",
-  port: Number(process.env.REDIS_PORT) || 6379
+  host: process.env.REDIS_HOST,
+  port: Number(process.env.REDIS_PORT),
+  password: process.env.REDIS_PASSWORD || undefined
 });
-redis.on("connect", () => console.log("Redis OK"));
-redis.on("error", err => console.error("Redis ERROR:", err));
+redis.on("connect", () => console.log("Redis connected"));
+redis.on("error", (err) => console.error("Redis error:", err));
 
-// --- MongoDB ---
-mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/shopifydb")
+// ---------------- MONGODB ----------------
+mongoose.connect(process.env.MONGO_URI!)
   .then(() => console.log("MongoDB OK"))
   .catch(err => console.error("MongoDB ERROR:", err));
 
-// --- Mongoose Schema ---
 const productSchema = new mongoose.Schema({
   productId: { type: String, unique: true },
   title: String,
@@ -51,38 +51,44 @@ const productSchema = new mongoose.Schema({
 });
 const Product = mongoose.model("Product", productSchema);
 
-// --- JSON loader ---
+// ---------------- LOAD JSON --------------
 function loadProductsFromJSON() {
-  if (fs.existsSync(JSON_FILE)) {
-    try { return JSON.parse(fs.readFileSync(JSON_FILE, "utf-8")); }
-    catch { return []; }
+  if (!fs.existsSync(JSON_FILE)) return [];
+  try {
+    return JSON.parse(fs.readFileSync(JSON_FILE, "utf-8"));
+  } catch {
+    return [];
   }
-  return [];
 }
 
-// --- Middleware RapidAPI Key ---
+// ---------------- API KEY MID ------------
 app.use((req, res, next) => {
-  const key = req.headers['x-rapidapi-key'];
-  if (!key || key !== process.env.API_KEY) {
-    return res.status(401).json({ success: false, error: 'Invalid API key' });
-  }
+  const key = req.headers["x-api-key"];
+  if (!key || key !== process.env.API_KEY)
+    return res.status(403).json({ success: false, error: "Invalid API KEY" });
+
   next();
 });
 
-// --- Scraper Shopify ---
+// ---------------- SCRAPER ----------------
 async function scrapeShopify() {
-  console.log("\n🚀 Scraping Shopify...");
+  console.log("\n🚀 Scraping started...");
 
   const oldProducts = loadProductsFromJSON();
   const oldLinks = new Set(oldProducts.map(p => p.link));
 
-  const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
+  const browser = await chromium.launch({
+    headless: true,
+    args: ['--no-sandbox'],
+  });
+
   const page = await browser.newPage();
   await page.goto("https://warehouse-theme-metal.myshopify.com/collections/home-cinema");
 
-  const totalPages = await page.$$eval('.pagination a', links =>
+  const totalPages = await page.$$eval('.pagination a', (links) =>
     Math.max(...links.map(l => Number(l.textContent)).filter(Boolean), 1)
   );
+
   await browser.close();
 
   const urls = Array.from({ length: totalPages }, (_, i) =>
@@ -92,96 +98,91 @@ async function scrapeShopify() {
   const crawler = new PlaywrightCrawler({
     headless: true,
     maxRequestsPerCrawl: 50,
-    async requestHandler({ page, pushData, request }) {
-      try {
-        await page.waitForSelector(".product-item", { timeout: 20000 }).catch(() => console.log("Pas de produit trouvé"));
-        const data = await page.$$eval(".product-item", items =>
-          items.map(item => {
-            const title = item.querySelector(".product-item__title")?.textContent?.trim();
-            const price = item.querySelector("span.price")?.textContent?.trim();
-            const link = item.querySelector("a")?.href;
-            const img = item.querySelector("img");
-            const image = img?.src || img?.getAttribute("data-src");
-            return { title, price, image, link };
-          })
-        );
+    async requestHandler({ page, pushData }) {
+      const items = await page.$$eval(".product-item", (products) =>
+        products.map(item => ({
+          title: item.querySelector(".product-item__title")?.textContent?.trim(),
+          price: item.querySelector("span.price")?.textContent?.trim(),
+          link: item.querySelector("a")?.href,
+          image:
+            item.querySelector("img")?.src ||
+            item.querySelector("img")?.getAttribute("data-src")
+        }))
+      );
 
-        const newProducts = data
-          .filter(d => d.link && !oldLinks.has(d.link))
-          .map(p => ({ ...p, productId: crypto.randomBytes(8).toString("hex") }));
+      const fresh = items
+        .filter(p => p.link && !oldLinks.has(p.link))
+        .map(p => ({ ...p, productId: crypto.randomBytes(8).toString("hex") }));
 
-        if (newProducts.length > 0) {
-          console.log(`\n--- Nouveaux produits depuis ${request.url} ---`);
-          newProducts.forEach(p => console.log(`${p.title} | ${p.price} | ${p.link}`));
-          newProducts.forEach(p => oldLinks.add(p.link));
-          await pushData(newProducts);
-        }
-      } catch (err) {
-        console.error(`Error scraping ${request.url}:`, err.message);
-      }
+      await pushData(fresh);
     }
   });
 
   await crawler.run(urls);
 
-  const datasetData = await Dataset.getData({ clean: true });
-  const scrapedItems = datasetData.items || [];
+  const dataset = await Dataset.getData({ clean: true });
+  const scraped = dataset.items;
 
-  const uniqueNewProducts = scrapedItems
-    .filter(p => p.link && !oldProducts.some(op => op.link === p.link))
-    .map(p => ({ ...p, productId: crypto.randomBytes(8).toString("hex") }));
+  const newData = scraped.filter(p => !oldProducts.some(op => op.link === p.link));
 
-  const allProducts = [...oldProducts, ...uniqueNewProducts];
+  const updated = [...oldProducts, ...newData];
 
-  fs.writeFileSync(JSON_FILE, JSON.stringify(allProducts, null, 2));
-  console.log(`💾 JSON mis à jour : ${allProducts.length} produits`);
+  fs.writeFileSync(JSON_FILE, JSON.stringify(updated, null, 2));
 
-  const ops = uniqueNewProducts.map(p => ({
-    updateOne: { filter: { link: p.link }, update: { $set: p }, upsert: true }
+  // Update MongoDB
+  const ops = newData.map(p => ({
+    updateOne: {
+      filter: { link: p.link },
+      update: { $set: p },
+      upsert: true,
+    },
   }));
-  if (ops.length > 0) await Product.bulkWrite(ops);
-  console.log("✅ MongoDB mis à jour");
+  if (ops.length) await Product.bulkWrite(ops);
 
-  await redis.set("shopify_products", JSON.stringify({ success: true, total: allProducts.length, products: allProducts }), "EX", Number(process.env.CACHE_TTL || 300));
-  console.log("✅ Redis mis à jour");
-  console.log("🏁 Scraping terminé !");
+  await redis.set(
+    "shopify_products",
+    JSON.stringify(updated),
+    "EX",
+    Number(process.env.CACHE_TTL) || 300
+  );
+
+  console.log("🏁 Scraping DONE");
 }
 
-// --- Endpoints ---
+// ---------------- API ENDPOINTS ----------
 app.get("/api/products", async (req, res) => {
-  try {
-    let allProducts = loadProductsFromJSON();
-    let { search = "", page = 1, limit = 10 } = req.query;
-    page = Number(page); limit = Number(limit);
-    const skip = (page - 1) * limit;
+  const json = loadProductsFromJSON();
+  let { search = "", page = 1, limit = 20 } = req.query;
 
-    let filtered = allProducts;
-    if (search) filtered = filtered.filter(p => p.title?.toLowerCase().includes(search.toLowerCase()));
+  page = Number(page);
+  limit = Number(limit);
 
-    const paginated = filtered.slice(skip, skip + limit);
-    return res.json({ success: true, page, limit, total: filtered.length, products: paginated });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ success: false, error: "Server error" });
-  }
+  const filtered = json.filter((p) =>
+    p.title?.toLowerCase().includes(String(search).toLowerCase())
+  );
+
+  const result = filtered.slice((page - 1) * limit, page * limit);
+
+  res.json({
+    success: true,
+    page,
+    limit,
+    total: filtered.length,
+    products: result,
+  });
 });
 
 app.get("/api/products/all", async (req, res) => {
-  try {
-    const allProducts = loadProductsFromJSON();
-    return res.json({ success: true, total: allProducts.length, products: allProducts });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ success: false, error: "Server error" });
-  }
+  const json = loadProductsFromJSON();
+  res.json({ success: true, total: json.length, products: json });
 });
 
-// --- Cron scraping toutes les heures ---
+// ---------------- CRON -------------------
 cron.schedule("0 * * * *", scrapeShopify);
 
-// --- Lancer serveur ---
+// ---------------- SERVER ------------------
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-// --- Lancer scraping au démarrage ---
-(async () => { await scrapeShopify().catch(console.error); })();
+app.listen(PORT, () => {
+  console.log("🚀 Server running on port " + PORT);
+  scrapeShopify();
+});

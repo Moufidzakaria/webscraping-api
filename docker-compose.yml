@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   api:
     build: .
@@ -7,12 +5,12 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - PORT=3000
+      - PORT=${PORT}
       - API_KEY=${API_KEY}
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - MONGO_URI=mongodb://mongo:27017/shopify_scraping
-      - CACHE_TTL=3600
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - MONGO_URI=${MONGO_URI}
+      - CACHE_TTL=${CACHE_TTL}
     depends_on:
       - redis
       - mongo
@@ -21,7 +19,7 @@ services:
     image: redis:7-alpine
     container_name: shopify_redis
     ports:
-      - "6379:6379"
+      - "6380:6379"
 
   mongo:
     image: mongo:7
