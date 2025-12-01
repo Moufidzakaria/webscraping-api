@@ -1,43 +1,29 @@
-name: CI/CD Docker
+name: Build and Deploy
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
-    services:
-      docker:
-        image: docker:20.10.24
-        options: --privileged
-        ports:
-          - 3000:3000
-
+    env:
+      API_KEY: ${{ secrets.API_KEY }}
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Install docker-compose
+      - name: Setup SSH
         run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose version
+          mkdir -p ~/.ssh
+          echo "${{ secrets.ACTIONS_DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-      - name: Build and run Docker Compose
-        run: docker-compose up --build -d
-        env:
-          API_KEY: ${{ secrets.API_KEY }}
-          MONGO_URI: ${{ secrets.MONGO_URI }}
-          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-          CACHE_TTL: ${{ secrets.CACHE_TTL }}
+      - name: Build Docker
+        run: docker compose build
+
+      - name: Run Docker
+        run: docker compose up -d
