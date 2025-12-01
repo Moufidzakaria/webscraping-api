@@ -1,33 +1,42 @@
+version: "3.9"
+
 services:
-  api:
+  shopify_api:
     build: .
     container_name: shopify_api
     ports:
       - "3000:3000"
     environment:
-      - PORT=${PORT}
-      - API_KEY=${API_KEY}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - MONGO_URI=${MONGO_URI}
-      - CACHE_TTL=${CACHE_TTL}
+      API_KEY: ${API_KEY}
+      MONGO_URI: ${MONGO_URI}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      CACHE_TTL: ${CACHE_TTL}
+      PORT: 3000
     depends_on:
-      - redis
       - mongo
-
-  redis:
-    image: redis:7-alpine
-    container_name: shopify_redis
-    ports:
-      - "6380:6379"
+      - redis
 
   mongo:
     image: mongo:7
-    container_name: shopify_mongo
+    container_name: mongo
+    restart: always
     ports:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
 
+  redis:
+    image: redis:8
+    container_name: redis
+    restart: always
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
 volumes:
   mongo_data:
+  redis_data:
