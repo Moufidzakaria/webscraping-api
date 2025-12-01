@@ -7,7 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     services:
       docker:
         image: docker:20.10.24
@@ -27,10 +26,23 @@ jobs:
       - name: Build Docker images
         run: docker-compose build
 
-      - name: Run Docker containers
+      - name: Start Docker containers
         run: docker-compose up -d
 
-      - name: Test API
+      - name: Wait for API to be ready
         run: |
-          sleep 10
-          curl -H "x-api-key: ${{ secrets.API_KEY }}" http://localhost:3000/api/products
+          echo "⏳ Waiting for API..."
+          for i in {1..30}; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" -H "x-rapidapi-key: ${{ secrets.API_KEY }}" http://localhost:3000/api/products)
+            if [ "$STATUS" -eq 200 ]; then
+              echo "✅ API is ready"
+              break
+            fi
+            echo "Waiting... ($i)"
+            sleep 2
+          done
+
+      - name: Test API endpoint
+        run: |
+          echo "🔍 Testing /api/products"
+          curl -H "x-rapidapi-key: ${{ secrets.API_KEY }}" http://localhost:3000/api/products
