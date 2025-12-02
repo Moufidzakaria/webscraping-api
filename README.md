@@ -1,5 +1,11 @@
 # Shopify Scraper API 🚀
+📈 CI/CD avec GitHub Actions
 
+Build et lancement automatique Docker containers
+
+Vérification que l’API est prête (curl test)
+
+Déploiement simple sur serveur / VPS ou Railway, Heroku…
 Une API Node.js pour récupérer automatiquement les produits d’une boutique Shopify.  
 Le projet est sécurisé, rapide, scalable et prêt pour Docker + CI/CD.
 
@@ -44,3 +50,22 @@ PORT=3000
 SHOPIFY_COLLECTION_URL=https://warehouse-theme-metal.myshopify.com/collections/home-cinema
 SCRAPE_CRON=0 * * * *
 ENABLE_SCRAPER=true
+
+🐳 Avec Docker
+docker-compose build
+docker-compose up -d
+
+
+MongoDB et Redis sont inclus dans le docker-compose.yml
+
+L’API est exposée sur le port 3000
+
+Le scraping se lance automatiquement avec le cron configuré
+
+📈 CI/CD avec GitHub Actions
+
+Build et lancement automatique Docker containers
+
+Vérification que l’API est prête (curl test)
+
+Déploiement simple sur serveur / VPS ou Railway, Heroku…
