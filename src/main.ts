@@ -42,18 +42,18 @@ app.use("/api", (req, res, next) => {
 
 // ---------------- CORS ------------------
 app.use("/api", cors());
-function checkApiKey(req, res, next) {
-  console.log("🔍 Headers reçu :", req.headers);
-  console.log("🔑 Query reçu   :", req.query);
 
-  let apiKey = req.headers["x-rapidapi-key"] || req.query.apiKey;
+// ---------------- MIDDLEWARE API KEY ------------------
+function checkApiKey(req: express.Request, res: express.Response, next: express.NextFunction) {
+  console.log("🔍 Headers reçus :", req.headers);
+  
+  const apiKey = req.headers["x-api-key"] as string;
 
-  if (!apiKey) return res.status(401).json({ success: false, error: "API key required" });
+  if (!apiKey) {
+    return res.status(401).json({ success: false, error: "API key required" });
+  }
 
-  apiKey = apiKey.trim();
-  const expectedKey = process.env.API_KEY?.trim();
-
-  if (!expectedKey || apiKey !== expectedKey) {
+  if (apiKey.trim() !== process.env.API_KEY?.trim()) {
     return res.status(403).json({ success: false, error: "Invalid API key" });
   }
 
@@ -61,6 +61,8 @@ function checkApiKey(req, res, next) {
 }
 
 app.use("/api", checkApiKey);
+
+
 
 // ---------------- REDIS ------------------
 const redis = new IORedis({
@@ -220,6 +222,9 @@ async function scrapeShopify() {
 
   console.log(`💾 JSON et Redis mis à jour : ${allProducts.length} produits`);
 }
+
+
+
 
 // ---------------- CRON ------------------
 cron.schedule(process.env.SCRAPE_CRON || "0 * * * *", scrapeShopify);

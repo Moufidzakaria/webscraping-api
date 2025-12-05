@@ -6,7 +6,7 @@ async function testApi() {
 
     // Endpoint pour récupérer tous les produits
     const response = await axios.get(
-      "http://localhost:3000/api/products?apiKey=MaSuperCleSecrete123&all=true"
+      "https://webscraping-api-production.up.railway.app/api/products?apiKey=MaSuperCleSecrete123&all=true"
     );
 
     const duration = Date.now() - start; // temps écoulé

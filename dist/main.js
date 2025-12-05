@@ -12,12 +12,16 @@ import IORedis from 'ioredis';
 import rateLimit from 'express-rate-limit';
 import cron from 'node-cron';
 import { fileURLToPath } from 'url';
+import helmet from 'helmet';
+import compression from 'compression';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const JSON_FILE = path.join(__dirname, "products.json");
 // ---------------- EXPRESS ------------------
 const app = express();
 app.use(express.json());
+app.use(helmet());
+app.use(compression());
 // Rate limiter
 app.use(rateLimit({
     windowMs: 60 * 1000,

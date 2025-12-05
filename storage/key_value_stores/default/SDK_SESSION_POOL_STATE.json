@@ -1,5 +1,244 @@
 {
-  "usableSessionsCount": 0,
+  "usableSessionsCount": 8,
   "retiredSessionsCount": 0,
-  "sessions": []
+  "sessions": [
+    {
+      "id": "session_DoSbSAuNu2",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-12-04T16:31:03.205Z",
+      "createdAt": "2025-12-04T15:41:03.205Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_CJmoBgAhaD",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": [
+          {
+            "key": "localization",
+            "value": "MA",
+            "expires": "2026-12-04T15:41:13.422Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": true,
+            "creation": "2025-12-04T15:41:06.632Z",
+            "lastAccessed": "2025-12-04T15:41:14.695Z"
+          },
+          {
+            "key": "cart_currency",
+            "value": "USD",
+            "expires": "2025-12-18T15:41:13.422Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": true,
+            "creation": "2025-12-04T15:41:06.633Z",
+            "lastAccessed": "2025-12-04T15:41:14.695Z"
+          },
+          {
+            "key": "_shopify_y",
+            "value": "bdafc987-54f6-4efe-a605-bef291af5dbc",
+            "expires": "2026-12-04T21:41:13.422Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-12-04T15:41:06.633Z",
+            "lastAccessed": "2025-12-04T15:41:14.695Z"
+          },
+          {
+            "key": "_shopify_s",
+            "value": "ca02b197-971a-46f0-8478-57f5e55e3341",
+            "expires": "2025-12-04T16:11:13.000Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "hostOnly": false,
+            "creation": "2025-12-04T15:41:06.633Z",
+            "lastAccessed": "2025-12-04T15:41:14.695Z"
+          },
+          {
+            "key": "_shopify_essential",
+            "value": ":AZrqBio_AAEAtLRj5dgq5syXzUf4nZN_23AUJVr0sPQlNlQ8t822XNLTVoPmSGIrug0k8rayLxpGi0vO1lnNuVHm5vTVO5aJo6wPaYvHekMKhD7MkypoSSZhprVyEf8OXIj12U7thblE79CBE663oHHPl4VBrXKdxy0qao7vuFklkRpJ6RB5x3W5iXnqtH48sd4rCVRRlmMfKOHnPzK6rJFAuXcl7sGv5Q6z56ubBalUpmbm5QmuhN520A5uFV3Q5Objtu8XYcTpfIt-p23aO0YuDfsv-hTiDjSfBxfxtab8Rtc2Xveut4l_dGu4J9DG09uEcq-egeivockj4yXKHt7fguDKviKBIl0zr7g:",
+            "expires": "2026-12-04T15:41:12.606Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "secure": true,
+            "httpOnly": true,
+            "hostOnly": true,
+            "creation": "2025-12-04T15:41:06.633Z",
+            "lastAccessed": "2025-12-04T15:41:14.695Z"
+          },
+          {
+            "key": "_shopify_analytics",
+            "value": ":AZrqBis-AAEA99faekU4ZENJ4lNYjwAcFlT_hWGW7Es4b_t2bBsKOSzlHEe1Y-nyXTOSGaUfBTvqXMh5gHZpGG_m6oVrcKIj01mqxHOqkj0JHQ:",
+            "expires": "2026-12-04T15:41:04.216Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "secure": true,
+            "httpOnly": true,
+            "hostOnly": true,
+            "creation": "2025-12-04T15:41:06.634Z",
+            "lastAccessed": "2025-12-04T15:41:14.695Z"
+          },
+          {
+            "key": "keep_alive",
+            "value": "eyJ2IjoyLCJ0cyI6MTc2NDg2Mjg3MjY5NCwiZW52Ijp7IndkIjowLCJ1YSI6MSwiY3YiOjEsImJyIjoxfSwiYmh2Ijp7Im1hIjowLCJjYSI6MCwia2EiOjAsInNhIjowLCJrYmEiOjAsInRhIjowLCJ0IjowLCJubSI6MCwibXMiOjAsIm1qIjowLCJtc3AiOjAsInZjIjowLCJjcCI6MCwicmMiOjAsImtqIjowLCJraSI6MCwic3MiOjAsInNqIjowLCJzc20iOjAsInNwIjowLCJ0cyI6MCwidGoiOjAsInRwIjowLCJ0c20iOjB9LCJzZXMiOnsicCI6MiwicyI6MTc2NDg2Mjg2NjM4NSwiZCI6NX19",
+            "expires": "2025-12-04T16:31:12.880Z",
+            "domain": "warehouse-theme-metal.myshopify.com",
+            "path": "/",
+            "secure": true,
+            "hostOnly": true,
+            "creation": "2025-12-04T15:41:06.795Z",
+            "lastAccessed": "2025-12-04T15:41:14.695Z"
+          }
+        ]
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-12-04T16:31:03.212Z",
+      "createdAt": "2025-12-04T15:41:03.212Z",
+      "usageCount": 7,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_nIz6TFkfPf",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-12-04T16:31:03.237Z",
+      "createdAt": "2025-12-04T15:41:03.237Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_iFog0L7Bho",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-12-04T16:31:06.899Z",
+      "createdAt": "2025-12-04T15:41:06.899Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_zCJeZCUKWh",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-12-04T16:31:07.191Z",
+      "createdAt": "2025-12-04T15:41:07.191Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_9Jng1ezBnf",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-12-04T16:31:09.965Z",
+      "createdAt": "2025-12-04T15:41:09.965Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_LnfvZzng03",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-12-04T16:31:09.982Z",
+      "createdAt": "2025-12-04T15:41:09.982Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    },
+    {
+      "id": "session_i8r1GraCkR",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.0",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": []
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2025-12-04T16:31:12.936Z",
+      "createdAt": "2025-12-04T15:41:12.936Z",
+      "usageCount": 0,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    }
+  ]
 }

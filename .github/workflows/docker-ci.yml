@@ -7,14 +7,28 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+<<<<<<< HEAD
+=======
+    services:
+      docker:
+        image: docker:20.10.24
+        options: --privileged
+
+>>>>>>> 9a461d3 (Ready for Railway)
     env:
       API_KEY: ${{ secrets.API_KEY }}
       MONGO_URI: ${{ secrets.MONGO_URI }}
       REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+<<<<<<< HEAD
+=======
+      CACHE_TTL: 60
+
+>>>>>>> 9a461d3 (Ready for Railway)
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+<<<<<<< HEAD
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -27,3 +41,33 @@ jobs:
 
       - name: Run Docker
         run: docker compose up -d
+=======
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Build Docker images
+        run: docker-compose build
+
+      - name: Start Docker containers
+        run: docker-compose up -d
+
+      - name: Wait for Shopify API to be ready
+        run: |
+          echo "⏳ Waiting for API..."
+          for i in {1..30}; do
+            STATUS=$(docker exec shopify_api curl -s -o /dev/null -w "%{http_code}" -H "x-rapidapi-key: $API_KEY" http://localhost:3000/api/products || echo "0")
+            if [ "$STATUS" -eq 200 ]; then
+              echo "✅ API is ready"
+              break
+            fi
+            echo "Waiting... ($i)"
+            sleep 2
+          done
+
+      - name: Test API endpoint
+        run: |
+          echo "🔍 Testing /api/products"
+          docker exec shopify_api curl -H "x-rapidapi-key: $API_KEY" http://localhost:3000/api/products
+>>>>>>> 9a461d3 (Ready for Railway)
