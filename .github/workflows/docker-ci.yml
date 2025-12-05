@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build, Deploy & Push AI Agent
 
 on:
   push:
@@ -15,27 +15,35 @@ jobs:
       PORT: 3000
 
     steps:
+      # 1️⃣ Checkout repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2️⃣ Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
+      # 3️⃣ Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to Docker (optional, si push sur Docker Hub)
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+    
 
+      # 5️⃣ Build & start Docker containers
       - name: Build and start Docker containers
         run: |
-          docker compose up -d --build   # note: pas de tiret
+          docker compose build
+          docker compose up -d
 
+      # 6️⃣ Push Docker image sur Docker Hub
+      - name: Push Docker image
+        run: |
+          docker tag my-app:latest ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+
+      # 7️⃣ Wait for API
       - name: Wait for API to be ready
         run: |
           echo "⏳ Waiting for API..."
@@ -49,6 +57,16 @@ jobs:
             sleep 2
           done
 
+      # 8️⃣ Test endpoint
       - name: Test /api/products endpoint
         run: |
           curl -H "x-api-key: $API_KEY" http://localhost:3000/api/products
+
+      # 9️⃣ Auto-commit & push fichiers générés par AI Agent
+      - name: Auto-commit AI Agent output
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git diff --quiet && echo "No changes to commit" || git commit -m "Auto-update AI Agent output"
+          git push origin main || echo "Push failed (maybe nothing new)"
