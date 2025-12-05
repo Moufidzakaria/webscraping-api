@@ -3,7 +3,7 @@
   "retiredSessionsCount": 0,
   "sessions": [
     {
-      "id": "session_DoSbSAuNu2",
+      "id": "session_CHR8bl7T7D",
       "cookieJar": {
         "version": "tough-cookie@6.0.0",
         "storeType": "MemoryCookieStore",
@@ -16,14 +16,14 @@
       "userData": {},
       "maxErrorScore": 3,
       "errorScoreDecrement": 0.5,
-      "expiresAt": "2025-12-04T16:31:03.205Z",
-      "createdAt": "2025-12-04T15:41:03.205Z",
+      "expiresAt": "2025-12-05T15:55:50.077Z",
+      "createdAt": "2025-12-05T15:05:50.077Z",
       "usageCount": 0,
       "maxUsageCount": 50,
       "errorScore": 0
     },
     {
-      "id": "session_CJmoBgAhaD",
+      "id": "session_FVQIg1NWmr",
       "cookieJar": {
         "version": "tough-cookie@6.0.0",
         "storeType": "MemoryCookieStore",
@@ -35,93 +35,93 @@
           {
             "key": "localization",
             "value": "MA",
-            "expires": "2026-12-04T15:41:13.422Z",
+            "expires": "2026-12-05T15:05:57.696Z",
             "domain": "warehouse-theme-metal.myshopify.com",
             "path": "/",
             "secure": true,
             "hostOnly": true,
-            "creation": "2025-12-04T15:41:06.632Z",
-            "lastAccessed": "2025-12-04T15:41:14.695Z"
+            "creation": "2025-12-05T15:05:52.671Z",
+            "lastAccessed": "2025-12-05T15:05:58.949Z"
           },
           {
             "key": "cart_currency",
             "value": "USD",
-            "expires": "2025-12-18T15:41:13.422Z",
+            "expires": "2025-12-19T15:05:57.696Z",
             "domain": "warehouse-theme-metal.myshopify.com",
             "path": "/",
             "secure": true,
             "hostOnly": true,
-            "creation": "2025-12-04T15:41:06.633Z",
-            "lastAccessed": "2025-12-04T15:41:14.695Z"
+            "creation": "2025-12-05T15:05:52.671Z",
+            "lastAccessed": "2025-12-05T15:05:58.949Z"
           },
           {
             "key": "_shopify_y",
-            "value": "bdafc987-54f6-4efe-a605-bef291af5dbc",
-            "expires": "2026-12-04T21:41:13.422Z",
+            "value": "d267602d-c230-4660-9917-67e9ac59ff3b",
+            "expires": "2026-12-05T21:05:57.696Z",
             "domain": "warehouse-theme-metal.myshopify.com",
             "path": "/",
             "hostOnly": false,
-            "creation": "2025-12-04T15:41:06.633Z",
-            "lastAccessed": "2025-12-04T15:41:14.695Z"
+            "creation": "2025-12-05T15:05:52.671Z",
+            "lastAccessed": "2025-12-05T15:05:58.949Z"
           },
           {
             "key": "_shopify_s",
-            "value": "ca02b197-971a-46f0-8478-57f5e55e3341",
-            "expires": "2025-12-04T16:11:13.000Z",
+            "value": "711a0e12-5ce6-415b-9a91-ca5be1adb46c",
+            "expires": "2025-12-05T15:35:57.000Z",
             "domain": "warehouse-theme-metal.myshopify.com",
             "path": "/",
             "hostOnly": false,
-            "creation": "2025-12-04T15:41:06.633Z",
-            "lastAccessed": "2025-12-04T15:41:14.695Z"
+            "creation": "2025-12-05T15:05:52.671Z",
+            "lastAccessed": "2025-12-05T15:05:58.949Z"
           },
           {
             "key": "_shopify_essential",
-            "value": ":AZrqBio_AAEAtLRj5dgq5syXzUf4nZN_23AUJVr0sPQlNlQ8t822XNLTVoPmSGIrug0k8rayLxpGi0vO1lnNuVHm5vTVO5aJo6wPaYvHekMKhD7MkypoSSZhprVyEf8OXIj12U7thblE79CBE663oHHPl4VBrXKdxy0qao7vuFklkRpJ6RB5x3W5iXnqtH48sd4rCVRRlmMfKOHnPzK6rJFAuXcl7sGv5Q6z56ubBalUpmbm5QmuhN520A5uFV3Q5Objtu8XYcTpfIt-p23aO0YuDfsv-hTiDjSfBxfxtab8Rtc2Xveut4l_dGu4J9DG09uEcq-egeivockj4yXKHt7fguDKviKBIl0zr7g:",
-            "expires": "2026-12-04T15:41:12.606Z",
+            "value": ":AZrvDEciAAEAfwZJJgmjDhMjVWBLQ5EOReRCwaHXFJcZkd4x56QMjNKvrevgD4syL1IXYMMFmbo9GuBak-d6EaSUk0wkKCZ_KIsajY35JO3Ox6jVYCm0JMkkNf4JVDoUoqecLFhodd5Z-b-mnZqJ7Dqzq4VuNpwuV-h4dmgF_JBpIY_P_Ii90DzObo_ZKcEQxV7AzD-CG-kzpf8LxujCZyuRiAEXeyIEm3UAOt7lcc9PyfYr5LcFU2y4QdVTNo2M5o29XZCqklTyUKJDkHxNjaoyRcEfu9QfKYo-vLLBUdOskzIvtMy2ZEg5xVpnnYS-kF3zr4m7_boZ_mMNd_fDlDAIBPF08e3nSqiVIHgT8w:",
+            "expires": "2026-12-05T15:05:54.995Z",
             "domain": "warehouse-theme-metal.myshopify.com",
             "path": "/",
             "secure": true,
             "httpOnly": true,
             "hostOnly": true,
-            "creation": "2025-12-04T15:41:06.633Z",
-            "lastAccessed": "2025-12-04T15:41:14.695Z"
+            "creation": "2025-12-05T15:05:52.672Z",
+            "lastAccessed": "2025-12-05T15:05:58.949Z"
           },
           {
             "key": "_shopify_analytics",
-            "value": ":AZrqBis-AAEA99faekU4ZENJ4lNYjwAcFlT_hWGW7Es4b_t2bBsKOSzlHEe1Y-nyXTOSGaUfBTvqXMh5gHZpGG_m6oVrcKIj01mqxHOqkj0JHQ:",
-            "expires": "2026-12-04T15:41:04.216Z",
+            "value": ":AZrvDEiBAAEAGtcTbG1tIDjImyN5FizTwT4T1DRjWV43j-IbI9MY3kwJjm6UMeQbecsqNuD8TpnmmA84jMS46xtB-YhA569qEl89ps4y7cGvjA:",
+            "expires": "2026-12-05T15:05:51.039Z",
             "domain": "warehouse-theme-metal.myshopify.com",
             "path": "/",
             "secure": true,
             "httpOnly": true,
             "hostOnly": true,
-            "creation": "2025-12-04T15:41:06.634Z",
-            "lastAccessed": "2025-12-04T15:41:14.695Z"
+            "creation": "2025-12-05T15:05:52.672Z",
+            "lastAccessed": "2025-12-05T15:05:58.949Z"
           },
           {
             "key": "keep_alive",
-            "value": "eyJ2IjoyLCJ0cyI6MTc2NDg2Mjg3MjY5NCwiZW52Ijp7IndkIjowLCJ1YSI6MSwiY3YiOjEsImJyIjoxfSwiYmh2Ijp7Im1hIjowLCJjYSI6MCwia2EiOjAsInNhIjowLCJrYmEiOjAsInRhIjowLCJ0IjowLCJubSI6MCwibXMiOjAsIm1qIjowLCJtc3AiOjAsInZjIjowLCJjcCI6MCwicmMiOjAsImtqIjowLCJraSI6MCwic3MiOjAsInNqIjowLCJzc20iOjAsInNwIjowLCJ0cyI6MCwidGoiOjAsInRwIjowLCJ0c20iOjB9LCJzZXMiOnsicCI6MiwicyI6MTc2NDg2Mjg2NjM4NSwiZCI6NX19",
-            "expires": "2025-12-04T16:31:12.880Z",
+            "value": "eyJ2IjoyLCJ0cyI6MTc2NDk0NzE1MjgxOSwiZW52Ijp7IndkIjowLCJ1YSI6MSwiY3YiOjEsImJyIjoxfSwiYmh2Ijp7Im1hIjowLCJjYSI6MCwia2EiOjAsInNhIjowLCJrYmEiOjAsInRhIjowLCJ0IjowLCJubSI6MCwibXMiOjAsIm1qIjowLCJtc3AiOjAsInZjIjowLCJjcCI6MCwicmMiOjAsImtqIjowLCJraSI6MCwic3MiOjAsInNqIjowLCJzc20iOjAsInNwIjowLCJ0cyI6MCwidGoiOjAsInRwIjowLCJ0c20iOjB9LCJzZXMiOnsicCI6MSwicyI6MTc2NDk0NzE1MjU0MCwiZCI6MH19",
+            "expires": "2025-12-05T15:55:54.997Z",
             "domain": "warehouse-theme-metal.myshopify.com",
             "path": "/",
             "secure": true,
             "hostOnly": true,
-            "creation": "2025-12-04T15:41:06.795Z",
-            "lastAccessed": "2025-12-04T15:41:14.695Z"
+            "creation": "2025-12-05T15:05:54.947Z",
+            "lastAccessed": "2025-12-05T15:05:58.949Z"
           }
         ]
       },
       "userData": {},
       "maxErrorScore": 3,
       "errorScoreDecrement": 0.5,
-      "expiresAt": "2025-12-04T16:31:03.212Z",
-      "createdAt": "2025-12-04T15:41:03.212Z",
+      "expiresAt": "2025-12-05T15:55:50.083Z",
+      "createdAt": "2025-12-05T15:05:50.083Z",
       "usageCount": 7,
       "maxUsageCount": 50,
       "errorScore": 0
     },
     {
-      "id": "session_nIz6TFkfPf",
+      "id": "session_YlnNvsHB8Z",
       "cookieJar": {
         "version": "tough-cookie@6.0.0",
         "storeType": "MemoryCookieStore",
@@ -134,14 +134,14 @@
       "userData": {},
       "maxErrorScore": 3,
       "errorScoreDecrement": 0.5,
-      "expiresAt": "2025-12-04T16:31:03.237Z",
-      "createdAt": "2025-12-04T15:41:03.237Z",
+      "expiresAt": "2025-12-05T15:55:50.094Z",
+      "createdAt": "2025-12-05T15:05:50.094Z",
       "usageCount": 0,
       "maxUsageCount": 50,
       "errorScore": 0
     },
     {
-      "id": "session_iFog0L7Bho",
+      "id": "session_vB3cgPrH4r",
       "cookieJar": {
         "version": "tough-cookie@6.0.0",
         "storeType": "MemoryCookieStore",
@@ -154,14 +154,14 @@
       "userData": {},
       "maxErrorScore": 3,
       "errorScoreDecrement": 0.5,
-      "expiresAt": "2025-12-04T16:31:06.899Z",
-      "createdAt": "2025-12-04T15:41:06.899Z",
+      "expiresAt": "2025-12-05T15:55:52.909Z",
+      "createdAt": "2025-12-05T15:05:52.909Z",
       "usageCount": 0,
       "maxUsageCount": 50,
       "errorScore": 0
     },
     {
-      "id": "session_zCJeZCUKWh",
+      "id": "session_jqwnwba6PQ",
       "cookieJar": {
         "version": "tough-cookie@6.0.0",
         "storeType": "MemoryCookieStore",
@@ -174,14 +174,14 @@
       "userData": {},
       "maxErrorScore": 3,
       "errorScoreDecrement": 0.5,
-      "expiresAt": "2025-12-04T16:31:07.191Z",
-      "createdAt": "2025-12-04T15:41:07.191Z",
+      "expiresAt": "2025-12-05T15:55:52.963Z",
+      "createdAt": "2025-12-05T15:05:52.963Z",
       "usageCount": 0,
       "maxUsageCount": 50,
       "errorScore": 0
     },
     {
-      "id": "session_9Jng1ezBnf",
+      "id": "session_SWI7ztWdpd",
       "cookieJar": {
         "version": "tough-cookie@6.0.0",
         "storeType": "MemoryCookieStore",
@@ -194,14 +194,14 @@
       "userData": {},
       "maxErrorScore": 3,
       "errorScoreDecrement": 0.5,
-      "expiresAt": "2025-12-04T16:31:09.965Z",
-      "createdAt": "2025-12-04T15:41:09.965Z",
+      "expiresAt": "2025-12-05T15:55:55.144Z",
+      "createdAt": "2025-12-05T15:05:55.144Z",
       "usageCount": 0,
       "maxUsageCount": 50,
       "errorScore": 0
     },
     {
-      "id": "session_LnfvZzng03",
+      "id": "session_edemH0FmBd",
       "cookieJar": {
         "version": "tough-cookie@6.0.0",
         "storeType": "MemoryCookieStore",
@@ -214,14 +214,14 @@
       "userData": {},
       "maxErrorScore": 3,
       "errorScoreDecrement": 0.5,
-      "expiresAt": "2025-12-04T16:31:09.982Z",
-      "createdAt": "2025-12-04T15:41:09.982Z",
+      "expiresAt": "2025-12-05T15:55:55.146Z",
+      "createdAt": "2025-12-05T15:05:55.146Z",
       "usageCount": 0,
       "maxUsageCount": 50,
       "errorScore": 0
     },
     {
-      "id": "session_i8r1GraCkR",
+      "id": "session_s8US4Y0xqg",
       "cookieJar": {
         "version": "tough-cookie@6.0.0",
         "storeType": "MemoryCookieStore",
@@ -234,8 +234,8 @@
       "userData": {},
       "maxErrorScore": 3,
       "errorScoreDecrement": 0.5,
-      "expiresAt": "2025-12-04T16:31:12.936Z",
-      "createdAt": "2025-12-04T15:41:12.936Z",
+      "expiresAt": "2025-12-05T15:55:57.263Z",
+      "createdAt": "2025-12-05T15:05:57.263Z",
       "usageCount": 0,
       "maxUsageCount": 50,
       "errorScore": 0
